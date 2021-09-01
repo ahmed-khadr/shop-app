@@ -11,21 +11,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My shop',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.indigo,
+        accentColor: Colors.redAccent,
+        fontFamily: 'Lato',
       ),
       home: ProductOverviewScreen(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('My shop'),
-      ),
-      body: Center(child: Text('Let\'s get started')),
     );
   }
 }
