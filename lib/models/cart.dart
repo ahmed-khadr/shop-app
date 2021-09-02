@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-class CartItem {
+class CartElement {
   final String id;
   final String title;
   final double price;
   final int quantity;
 
-  const CartItem({
+  const CartElement({
     required this.id,
     required this.title,
     required this.price,
@@ -15,9 +15,9 @@ class CartItem {
 }
 
 class Cart with ChangeNotifier {
-  Map<String, CartItem> _items = {};
+  Map<String, CartElement> _items = {};
 
-  Map<String, CartItem> get items => {..._items};
+  Map<String, CartElement> get items => {..._items};
 
   int get itemCount => _items.length;
 
@@ -41,7 +41,7 @@ class Cart with ChangeNotifier {
     if (_items.containsKey(productId)) {
       _items.update(
         productId,
-        (existingCartItem) => CartItem(
+        (existingCartItem) => CartElement(
           id: existingCartItem.id,
           title: existingCartItem.title,
           price: existingCartItem.price,
@@ -51,7 +51,7 @@ class Cart with ChangeNotifier {
     } else {
       _items.putIfAbsent(
         productId,
-        () => CartItem(
+        () => CartElement(
           id: DateTime.now().toString(),
           title: productTitle,
           price: price,
