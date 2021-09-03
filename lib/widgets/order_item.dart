@@ -48,7 +48,7 @@ class _OrderItemState extends State<OrderItem> {
                         Text(
                           product.title,
                           style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         Text('${product.quantity}x'),
                         Text(
