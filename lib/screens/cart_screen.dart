@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/models/cart.dart';
 import 'package:shop_app/models/orders.dart';
+import 'package:shop_app/widgets/app_drawer.dart';
 import 'package:shop_app/widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
@@ -13,6 +14,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
     return Scaffold(
+      drawer: AppDrawer(),
       backgroundColor: Color.fromRGBO(251, 247, 249, 0.9),
       appBar: AppBar(
         title: const Text('Your Cart'),
@@ -35,7 +37,7 @@ class CartScreen extends StatelessWidget {
                   const SizedBox(width: 10),
                   Chip(
                     label: Text(
-                      '\$${cart.total}',
+                      '\$${cart.total.toStringAsFixed(2)}',
                       style: TextStyle(
                         color:
                             Theme.of(context).primaryTextTheme.headline1?.color,

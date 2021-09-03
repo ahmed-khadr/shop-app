@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/models/cart.dart';
+import 'package:shop_app/widgets/app_drawer.dart';
 import 'package:shop_app/widgets/badge.dart';
 import 'package:shop_app/widgets/products_gridview.dart';
 
@@ -24,6 +25,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(251, 247, 249, 0.9),
+      drawer: AppDrawer(),
       appBar: AppBar(
         title: const Text('My Shop'),
         actions: [
