@@ -10,7 +10,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context, listen: false);
+    final cart = Provider.of<Cart>(context);
     return Scaffold(
       backgroundColor: Color.fromRGBO(251, 247, 249, 0.9),
       appBar: AppBar(
@@ -35,8 +35,9 @@ class CartScreen extends StatelessWidget {
                   Chip(
                     label: Text(
                       '\$${cart.total}',
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color:
+                            Theme.of(context).primaryTextTheme.headline1?.color,
                       ),
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
@@ -54,11 +55,13 @@ class CartScreen extends StatelessWidget {
               itemCount: cart.itemCount,
               itemBuilder: (_, index) {
                 var cartItem = cart.items.values.toList()[index];
+                var productId = cart.items.keys.toList()[index];
                 return CartItem(
                   id: cartItem.id,
                   title: cartItem.title,
                   price: cartItem.price,
                   quantity: cartItem.quantity,
+                  productId: productId,
                 );
               },
             ),
