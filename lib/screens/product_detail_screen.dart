@@ -16,7 +16,7 @@ class ProductDetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.fromRGBO(251, 247, 249, 0.9),
       appBar: AppBar(
-        title: Text(loadedProduct?.title ?? 'Empty Product'),
+        title: Text(loadedProduct.title),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -25,13 +25,13 @@ class ProductDetailScreen extends StatelessWidget {
               height: 300,
               width: double.infinity,
               child: Image.network(
-                loadedProduct?.imageUrl ?? "",
+                loadedProduct.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 10),
             Text(
-              '\$${loadedProduct?.price}',
+              '\$${loadedProduct.price}',
               style: const TextStyle(
                 color: Colors.blueGrey,
                 fontSize: 20,
@@ -41,7 +41,7 @@ class ProductDetailScreen extends StatelessWidget {
             Container(
               width: double.infinity,
               child: Text(
-                loadedProduct?.description ?? "Nothing to say",
+                loadedProduct.description,
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),
