@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "791951311181",
+    "project_id": "shop-app-a8a58",
+    "storage_bucket": "shop-app-a8a58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791951311181:android:a0a49b90fdd0709606b704",
+        "android_client_info": {
+          "package_name": "com.khedro.shop_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791951311181-jk2ed52ja5qpn081hdbdpicfhrpmt9s1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpicrUDxeKdenVpTJhHfBzYRVYcXvguyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791951311181-jk2ed52ja5qpn081hdbdpicfhrpmt9s1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
