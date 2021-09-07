@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/helper_models/http_exception.dart';
 import 'package:shop_app/models/cart.dart';
+import 'package:shop_app/models/products_provider.dart';
 import 'package:shop_app/widgets/app_drawer.dart';
 import 'package:shop_app/widgets/badge.dart';
 import 'package:shop_app/widgets/products_gridview.dart';
@@ -21,6 +23,32 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   bool _showFavorites = false;
+  bool _isLoading = false;
+  bool _isThereProducts = true;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _isLoading = true;
+    });
+    Provider.of<ProductsProvider>(context, listen: false)
+        .fetchAndSetProducts()
+        .then(
+          (_) => setState(() {
+            _isLoading = false;
+          }),
+        )
+        .catchError((error) {
+      if (error is HttpException) {
+        setState(() {
+          _isLoading = false;
+          _isThereProducts = false;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +90,37 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
                   ]),
         ],
       ),
-      body: ProductsGridView(
-        showFavorites: _showFavorites,
-      ),
+      body: _buildProductsWidgets(),
+      // body: _isLoading
+      //     ? Center(
+      //         child: CircularProgressIndicator(),
+      //       )
+      //     : ProductsGridView(
+      //         showFavorites: _showFavorites,
+      //       ),
     );
+  }
+
+  Widget _buildProductsWidgets() {
+    if (_isThereProducts && !_isLoading) {
+      return ProductsGridView(
+        showFavorites: _showFavorites,
+      );
+    }
+    if (_isLoading && _isThereProducts) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      return const Center(
+        child: const Text(
+          'There is no product yet',
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
   }
 }
