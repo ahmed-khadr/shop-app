@@ -1,3 +1,5 @@
+#secret keys
+constants.dart
 # Miscellaneous
 *.class
 *.log
