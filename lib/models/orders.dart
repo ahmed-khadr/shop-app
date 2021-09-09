@@ -36,7 +36,6 @@ class Orders with ChangeNotifier {
       if (extractedData == null) {
         throw HttpException('Extracted Data is null');
       }
-      print(extractedData);
       extractedData.forEach(
         (orderId, orderData) {
           loadedOrders.add(
