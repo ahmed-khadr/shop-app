@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/models/products_provider.dart';
@@ -12,12 +13,11 @@ class UserProductsScreen extends StatelessWidget {
 
   Future<void> _refresh(BuildContext context) async {
     await Provider.of<ProductsProvider>(context, listen: false)
-        .fetchAndSetProducts();
+        .fetchAndSetProducts(true);
   }
 
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<ProductsProvider>(context).items;
     return Scaffold(
       backgroundColor: Color.fromRGBO(251, 247, 249, 0.9),
       drawer: AppDrawer(),
@@ -33,26 +33,39 @@ class UserProductsScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () => _refresh(context),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            itemBuilder: (_, index) => Column(
-              children: [
-                UserProductItem(
-                  id: products[index].id,
-                  title: products[index].title,
-                  imageUrl: products[index].imageUrl,
-                ),
-                const Divider(
-                  color: Colors.black54,
-                ),
-              ],
-            ),
-            itemCount: products.length,
-          ),
-        ),
+      body: FutureBuilder(
+        future: _refresh(context),
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? const Center(
+                    child: const CircularProgressIndicator(),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () => _refresh(context),
+                    child: Consumer<ProductsProvider>(
+                      builder: (ctx, productData, _) {
+                        final products = productData.items;
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListView.builder(
+                            itemBuilder: (_, index) => Column(
+                              children: [
+                                UserProductItem(
+                                  id: products[index].id,
+                                  title: products[index].title,
+                                  imageUrl: products[index].imageUrl,
+                                ),
+                                const Divider(
+                                  color: Colors.black54,
+                                ),
+                              ],
+                            ),
+                            itemCount: products.length,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
       ),
     );
   }

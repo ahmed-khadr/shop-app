@@ -8,9 +8,18 @@ class OrderScreen extends StatelessWidget {
   const OrderScreen({Key? key}) : super(key: key);
   static const String routeName = '/order-screen';
 
+  // Future<void> _fetch(BuildContext context) async {
+  //   try {
+  //     final future =
+  //         await Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
+  //     return future;
+  //   } on HttpException catch (error) {
+  //     print(error.toString());
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    // final orders = Provider.of<Orders>(context).orders;
     return Scaffold(
       drawer: AppDrawer(),
       backgroundColor: Color.fromRGBO(251, 247, 249, 0.9),
@@ -21,19 +30,35 @@ class OrderScreen extends StatelessWidget {
         future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: const CircularProgressIndicator());
+            return const Center(
+              child: const CircularProgressIndicator(),
+            );
           }
+
           if (snapshot.error != null) {
             return Center(
               child: const Text('An Error has occurred!'),
             );
           } else {
             return Consumer<Orders>(
-              builder: (ctx, orderData, child) => ListView.builder(
-                itemBuilder: (_, index) =>
-                    OrderItem(order: orderData.orders[index]),
-                itemCount: orderData.orders.length,
-              ),
+              builder: (ctx, orderData, child) {
+                if (orderData.orders.length == 0) {
+                  return const Center(
+                    child: const Text(
+                      'No orders yet',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  itemBuilder: (_, index) =>
+                      OrderItem(order: orderData.orders[index]),
+                  itemCount: orderData.orders.length,
+                );
+              },
             );
           }
         },
